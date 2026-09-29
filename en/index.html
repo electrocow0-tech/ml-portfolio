@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" data-track="ml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Denis Kazhaev — ML / LLM Engineer</title>
+<meta name="description" content="ML / LLM engineer: production RAG, hybrid retrieval and reranking, PEFT/LoRA, LLM evaluation, latency and MLOps.">
+<meta property="og:title" content="Denis Kazhaev — ML / LLM Engineer">
+<meta property="og:description" content="ML / LLM engineer: production RAG, hybrid retrieval and reranking, PEFT/LoRA, LLM evaluation, latency and MLOps.">
+<meta property="og:type" content="profile">
+<link rel="alternate" hreflang="ru" href="/ru/"><link rel="alternate" hreflang="en" href="/en/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="mark" href="#top"><span class="mono">DK</span><span class="mark-name">Denis Kazhaev</span></a>
+    <nav class="nav"><a href="#about">About</a><a href="#process">Process</a><a href="#cases">Projects</a><a href="#stack">Stack</a><a href="#contact">Contact</a></nav>
+    <div class="switches">
+      <div class="seg" role="group" aria-label="language"><a href="../ru/">RU</a><a href="../en/" class="on" aria-current="page">EN</a></div>
+    </div>
+  </div>
+</header>
+<main>
+
+<section class="hero wrap" id="top">
+  <div class="hero-text">
+    <p class="kicker mono">ML / LLM Engineer · production RAG</p>
+    <h1>Production RAG and LLM systems: retrieval, evaluation, fine-tuning and MLOps.</h1>
+    <p class="lead">I build LLM services from ingestion to monitoring: hybrid retrieval and reranking, grounded generation, PEFT/LoRA, claim-level evaluation, latency optimisation, reproducible experiments and production infrastructure. I own tasks independently and agree metrics and constraints with stakeholders myself.</p>
+    <div class="cta">
+      <a class="btn btn-main" href="https://t.me/den_kxcv">Message on Telegram ↗</a>
+      <a class="btn" href="mailto:d.al.kazhaev@gmail.com">d.al.kazhaev@gmail.com</a>
+    </div>
+    <p class="meta mono">Serbia · remote · UTC+1 &nbsp;/&nbsp; Russian — native, English — B1</p>
+  </div>
+  <figure class="trace" aria-hidden="true">
+    <figcaption class="mono"><span class="dot"></span><span class="dot"></span><span class="dot"></span> rag.trace</figcaption>
+    <ol class="mono"><li style="--i:0"><span class="ln">01</span><span class="fn">query</span><span class="arg">“E-217 on fw v4.2?”</span></li><li style="--i:1"><span class="ln">02</span><span class="fn">bm25 ∪ dense</span><span class="arg">top_n=50</span></li><li style="--i:2"><span class="ln">03</span><span class="fn">rrf</span><span class="arg">fused ranks</span></li><li style="--i:3"><span class="ln">04</span><span class="fn">rerank</span><span class="arg">cross-encoder · top_k=5</span></li><li style="--i:4"><span class="ln">05</span><span class="fn">generate</span><span class="arg">grounded · cited</span></li><li style="--i:5"><span class="ln">06</span><span class="fn">claim_check</span><span class="arg">unsupported ↓30%</span></li><li style="--i:6"><span class="ln">07</span><span class="fn">latency</span><span class="arg">p50 ≈ 700 ms</span></li><li style="--i:7"><span class="ln">08</span><span class="fn">done</span><span class="blink">▍</span></li></ol>
+  </figure>
+</section>
+<section class="wrap block" id="about"><h2 class="h2">What I bring</h2><div class="prs"><div class="pr"><span class="pr-n mono">01</span><h4>Production RAG</h4><p>Ingestion and metadata, chunking tuned on an eval set, dense + BM25, RRF, cross-encoder reranking, product and version filters, fallback on weak context.</p></div><div class="pr"><span class="pr-n mono">02</span><h4>Evaluation</h4><p>Golden sets, Recall@K, NDCG / MRR for retrieval; groundedness and unsupported-claim rate for generation; regression suites and shadow mode.</p></div><div class="pr"><span class="pr-n mono">03</span><h4>Fine-tuning</h4><p>PEFT / LoRA on good answers, real mistakes and correct-refusal examples. Versions are compared on claim-level metrics, not by eye.</p></div><div class="pr"><span class="pr-n mono">04</span><h4>Latency and cost</h4><p>Per-stage latency breakdown, caching of embeddings, retrieval and context, a cap on reranker candidates, async I/O, context length control. P50 / P95, not the mean.</p></div><div class="pr"><span class="pr-n mono">05</span><h4>MLOps</h4><p>ClearML for experiments, Docker, CI/CD on GitHub Actions, AWS deployment, Prometheus and Grafana with per-stage dashboards and alerts.</p></div><div class="pr"><span class="pr-n mono">06</span><h4>Backend</h4><p>Python, FastAPI, PostgreSQL, Redis, Pydantic schemas for structured output, retries, idempotency, health checks, structured logging.</p></div></div></section><section class="wrap block" id="process"><h2 class="h2">How I run an ML task</h2><p class="section-lead">A standard ML system design cycle: framing and metrics → data → baseline → experiments → evaluation → rollout → monitoring. Every prompt, model or retrieval change goes through a regression run.</p><ol class="steps"><li><span class="st-n mono">01</span><div><h4>Framing and metrics</h4><p>Constraints, target offline and online metrics, latency and cost-per-request budgets.</p><p class="st-art mono">Artifact: ML system design doc</p></div></li><li><span class="st-n mono">02</span><div><h4>Data and golden set</h4><p>Real queries with labelled sources, segments (paraphrases, exact terms and codes), a regression set of hard cases.</p><p class="st-art mono">Artifact: eval set</p></div></li><li><span class="st-n mono">03</span><div><h4>Baseline</h4><p>A simple interpretable solution as a reference point, to see where complex components really add value.</p><p class="st-art mono">Artifact: baseline metrics</p></div></li><li><span class="st-n mono">04</span><div><h4>Experiments</h4><p>Chunking, retrieval, reranker, prompts, PEFT / LoRA. Parameters, data and code versions, metrics and artifacts in ClearML.</p><p class="st-art mono">Artifact: run comparison</p></div></li><li><span class="st-n mono">05</span><div><h4>Evaluation</h4><p>Retrieval, generation and system separately; per-segment slices; a regression run before any change.</p><p class="st-art mono">Artifact: metrics report</p></div></li><li><span class="st-n mono">06</span><div><h4>Rollout</h4><p>Shadow mode on real traffic, gradual rollout, fast rollback of the index and model.</p><p class="st-art mono">Artifact: production service</p></div></li><li><span class="st-n mono">07</span><div><h4>Monitoring</h4><p>Per-stage latency, errors, fallback, cache hit rate, indexing lag; alerts and degradation analysis.</p><p class="st-art mono">Artifact: dashboards and alerts</p></div></li></ol></section><section class="wrap block" id="cases"><h2 class="h2">Projects</h2>
+<article class="case" data-tags="" id="case-yadro">
+  <div class="case-head">
+    <span class="case-num">01</span>
+    <div>
+      <p class="case-client mono">YADRO · ML Engineer · Aug 2024 — Nov 2025</p>
+      <h3>RAG assistant over technical documentation</h3>
+    </div>
+  </div>
+  <div class="case-body">
+    <div class="case-problem"><h5 class="mono">Problem</h5><p>Large, frequently updated documentation full of similar terms, versions and configurations. Answers must rest on the current source, not on the model&#x27;s general knowledge.</p></div>
+    
+    <div class="case-cols">
+      <div><h5 class="mono">What I built</h5><ul><li>Ingestion with semantic chunking and metadata (product, version, component); chunk size and overlap tuned on an eval set.</li><li>Hybrid retrieval: dense + BM25, RRF, a cross-encoder reranker on the top-N, product and version filters.</li><li>Grounded generation with source references and a fallback on weak context.</li><li>LoRA/PEFT adaptation and claim-level evaluation on a regression set.</li></ul></div>
+      <div><h5 class="mono">Engineering decisions</h5><ul><li>Latency broken down by stage; caching embeddings, retrieval and context; a cap on reranker candidates.</li><li>Every change goes through a regression suite and shadow mode.</li><li>Reproducible experiments in ClearML.</li></ul></div>
+    </div>
+    <div class="case-result"><h5 class="mono">Result</h5><p>Recall@5 +18% over the baseline, unsupported claims −30%, P50 response time ~700 ms.</p></div>
+    <p class="case-shows"><span class="mono">What it shows →</span> The full production RAG cycle: retrieval, generation, fine-tuning, evaluation and latency.</p>
+    <p class="stackline mono">Python · Transformers · Sentence Transformers · PEFT/LoRA · BM25 · cross-encoder · FastAPI · ClearML · Docker · Prometheus · Grafana</p>
+  </div>
+</article>
+<article class="case" data-tags="" id="case-alp">
+  <div class="case-head">
+    <span class="case-num">02</span>
+    <div>
+      <p class="case-client mono">ALP GROUP · ML Engineer · Jul 2022 — Jun 2024</p>
+      <h3>Meeting minutes generation</h3>
+    </div>
+  </div>
+  <div class="case-body">
+    <div class="case-problem"><h5 class="mono">Problem</h5><p>Extract decisions, action items, deadlines and owners from a long ASR transcript — without adding anything that was never said.</p></div>
+    
+    <div class="case-cols">
+      <div><h5 class="mono">What I built</h5><ul><li>ASR preprocessing: cleanup, segmentation by time and speaker, entities, timestamp linking.</li><li>An interpretable baseline: TF-IDF, logistic regression, gradient boosting.</li><li>RAG: Sentence Transformers + FAISS, BM25, RRF, a reranker; hierarchical summarisation by topic.</li><li>Validation: Pydantic, evidence checks against fragments, a needs_review status.</li></ul></div>
+      <div><h5 class="mono">Engineering decisions</h5><ul><li>The whole transcript is never sent to the model: costlier, slower and loses details in the middle.</li><li>Unconfirmed deadlines and owners are suppressed — an empty field for review beats an invention.</li><li>CI/CD via GitHub Actions, deployment to AWS, Prometheus / Grafana monitoring.</li></ul></div>
+    </div>
+    <div class="case-result"><h5 class="mono">Result</h5><p>Recall@10 +12% on the golden set, hallucination rate −20% on the regression set.</p></div>
+    <p class="case-shows"><span class="mono">What it shows →</span> A baseline before the LLM, long-context handling and a validation layer against hallucinations.</p>
+    <p class="stackline mono">Python · scikit-learn · Sentence Transformers · FAISS · BM25 · cross-encoder · Pydantic · FastAPI · Docker · GitHub Actions · AWS</p>
+  </div>
+</article><p class="note mono">Metrics are relative to the baseline on fixed evaluation sets.</p><h3 class="h3">LLM systems at 1-lab</h3><div class="grid2"><article class="card" id="case-seller" data-tags=""><h4>RAG over a B2B equipment catalog</h4><p>Hundreds of SKUs from Google Drive: incremental indexing by hash, document version in the index, SKU filters, structured output and human fallback. Evaluated on a golden set with labelled sources, online via handoff rate and share of leads reaching the CRM.</p><p class="stackline mono">RAG · embeddings · metadata filters · Pydantic · FastAPI · PostgreSQL</p></article><article class="card" id="case-callqc" data-tags=""><h4>LLM call scoring against a checklist</h4><p>Classifier and scorer are separate: different tasks, different strictness. The model answers binary questions, the code computes the score, and reference transcripts re-run on every criteria change.</p><p class="stackline mono">AssemblyAI · LLM API · post-validation · PostgreSQL</p></article><article class="card" id="case-editorial" data-tags=""><h4>Multi-agent pipeline with a quality gate</h4><p>Four roles with a JSON contract, a quality threshold and up to 3 iterations, different models and temperatures per role, human-in-the-loop before publishing.</p><p class="stackline mono">LLM API · agent orchestration · Telethon · PostgreSQL</p></article></div></section><section class="wrap block" id="stack"><h2 class="h2">Stack</h2><dl class="skills"><div class="sk"><dt class="mono">Backend</dt><dd><ul class="tags"><li>Python</li><li>FastAPI</li><li>Pydantic</li><li>PostgreSQL</li><li>Redis</li></ul></dd></div><div class="sk"><dt class="mono">LLM &amp; models</dt><dd><ul class="tags"><li>LLM API</li><li>open-source LLM</li><li>Hugging Face Transformers</li><li>Sentence Transformers</li><li>PEFT / LoRA</li></ul></dd></div><div class="sk"><dt class="mono">RAG &amp; retrieval</dt><dd><ul class="tags"><li>embeddings</li><li>FAISS</li><li>BM25</li><li>hybrid retrieval</li><li>RRF</li><li>cross-encoder reranking</li><li>metadata filtering</li></ul></dd></div><div class="sk"><dt class="mono">Evaluation</dt><dd><ul class="tags"><li>golden sets</li><li>Recall@K</li><li>NDCG</li><li>MRR</li><li>groundedness</li><li>unsupported claim rate</li><li>regression suites</li><li>P50 / P95 latency</li><li>cache hit rate</li></ul></dd></div><div class="sk"><dt class="mono">MLOps</dt><dd><ul class="tags"><li>Docker</li><li>GitHub Actions</li><li>AWS</li><li>Prometheus</li><li>Grafana</li><li>ClearML (трекинг экспериментов)</li></ul></dd></div><div class="sk"><dt class="mono">Integrations</dt><dd><ul class="tags"><li>n8n</li><li>CRM API</li><li>Google Drive API</li><li>Telegram API</li></ul></dd></div></dl></section><section class="wrap block" id="experience"><h2 class="h2">Experience</h2><ol class="timeline"><li><span class="period mono">Dec 2025 — present</span><div><h4>1-lab <span class="role">· LLM Engineer</span></h4><p>Production LLM services: catalog RAG with incremental indexing, LLM call scoring with deterministic scoring, a multi-agent pipeline with a quality gate.</p></div></li><li><span class="period mono">Aug 2024 — Nov 2025</span><div><h4>YADRO <span class="role">· ML Engineer</span></h4><p>Production RAG over technical documentation: hybrid retrieval, reranking, LoRA/PEFT, claim-level evaluation, latency.</p></div></li><li><span class="period mono">Jul 2022 — Jun 2024</span><div><h4>ALP GROUP <span class="role">· ML Engineer</span></h4><p>NLP and LLMs for meeting minutes: classical baseline, hybrid RAG, hierarchical summarisation, validation.</p></div></li></ol></section>
+
+<section class="wrap contact" id="contact">
+  <h2>Let&#x27;s talk</h2>
+  <p class="lead">Open to remote roles. Telegram is the fastest way to reach me.</p>
+  <div class="cta">
+    <a class="btn btn-main" href="https://t.me/den_kxcv">Telegram · @den_kxcv ↗</a>
+    <a class="btn" href="mailto:d.al.kazhaev@gmail.com">d.al.kazhaev@gmail.com</a>
+  </div>
+  <p class="meta mono">Serbia · remote · UTC+1 &nbsp;/&nbsp; Russian — native, English — B1</p>
+</section>
+<footer class="wrap foot mono">
+  <span>Serbia · remote · UTC+1</span>
+  <span>© 2026 Denis Kazhaev</span>
+</footer>
+</main>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>
