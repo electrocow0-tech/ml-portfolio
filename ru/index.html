@@ -65,9 +65,49 @@
     <p class="stackline mono">Python · Transformers · Sentence Transformers · PEFT/LoRA · BM25 · cross-encoder · FastAPI · ClearML · Docker · Prometheus · Grafana</p>
   </div>
 </article>
-<article class="case" data-tags="" id="case-alp">
+<article class="case" data-tags="" id="case-ml-callqc">
   <div class="case-head">
     <span class="case-num">02</span>
+    <div>
+      <p class="case-client mono">1-lab · LLM Engineer · автодилер, продакшен</p>
+      <h3>LLM-оценка звонков с измеримой надёжностью</h3>
+    </div>
+  </div>
+  <div class="case-body">
+    <div class="case-problem"><h5 class="mono">Задача</h5><p>Каждый звонок отдела продаж нужно оценить по чек-листу из 15 взвешенных критериев — без человека и так, чтобы оценке можно было доверять. Вручную слушали 20–30% звонков.</p></div>
+    
+    <div class="case-cols">
+      <div><h5 class="mono">Что я построил</h5><ul><li>Транскрибация с диаризацией, разметка реплик «менеджер / клиент» с таймкодами.</li><li>Первый LLM-шаг — классификатор типа звонка по содержанию, а не по длительности: технический, сорвавшийся, клиент едет сам, полноценная продажа.</li><li>Второй шаг — скорер: бинарные ответы по каждому критерию плюс текст возражения, причина отказа и краткое саммари.</li><li>Пост-валидация в коде: извлечение JSON, приведение к сетке «0 или вес критерия», обрезка полей, детерминированный расчёт итогового балла.</li></ul></div>
+      <div><h5 class="mono">Инженерные решения</h5><ul><li>Два вызова вместо одного: разные задачи и разная строгость — меньше ложных нулей на коротких содержательных звонках, чек-лист меняется без правки фильтрации.</li><li>Набор эталонных транскриптов с ожидаемыми оценками прогоняется при каждом изменении критериев; выборка регулярно сверяется с ручной оценкой, расхождения уходят в правила промпта.</li><li>Классификатор настроен консервативно: лучше оценить лишний звонок, чем пропустить содержательный.</li></ul></div>
+    </div>
+    <div class="case-result"><h5 class="mono">Результат</h5><p>25 950+ звонков оценено, покрытие 100% вместо 20–30%, оценка появляется через 1–2 минуты после сделки.</p></div>
+    <p class="case-shows"><span class="mono">Что это показывает →</span> LLM как надёжный компонент: декомпозиция задачи, ограниченный вывод, детерминированный скоринг и регрессионная оценка.</p>
+    <p class="stackline mono">Python · AssemblyAI · LLM API · Pydantic · PostgreSQL · S3 · Docker · Grafana</p>
+  </div>
+</article>
+<article class="case" data-tags="" id="case-ml-rag">
+  <div class="case-head">
+    <span class="case-num">03</span>
+    <div>
+      <p class="case-client mono">1-lab · LLM Engineer · промышленный производитель, продакшен</p>
+      <h3>RAG по каталогу B2B-оборудования</h3>
+    </div>
+  </div>
+  <div class="case-body">
+    <div class="case-problem"><h5 class="mono">Задача</h5><p>Сотни SKU, спецификации и прайсы регулярно меняются. Ассистент не должен выдумывать характеристики и цены и путать похожие модели.</p></div>
+    
+    <div class="case-cols">
+      <div><h5 class="mono">Что я построил</h5><ul><li>Ingestion из Google Drive: детекция изменений по хешу, инкрементальная переиндексация каждые 15 минут, извлечение текста и технических таблиц.</li><li>Смысловой чанкинг по разделам, моделям и спецификациям, а не по числу символов; метаданные: SKU, категория, источник, дата, версия.</li><li>Retrieval с фильтрами по метаданным и порогом релевантности; grounded-генерация со structured output (ответ, поля, уверенность, флаг эскалации).</li><li>Оценка: golden set реальных вопросов с размеченными источниками (Recall@K, NDCG@K), groundedness и доля ответов без опоры; онлайн — handoff rate и задержка.</li></ul></div>
+      <div><h5 class="mono">Инженерные решения</h5><ul><li>RAG, а не fine-tuning: каталог и прайсы меняются, индекс обновляется без переобучения.</li><li>Фильтр по SKU не даёт поиску уйти к похожей, но другой модели; нет опоры в контексте — нет цифры в ответе, вопрос уходит человеку.</li><li>Версия документа и время индексации хранятся в индексе — по любому ответу видно, из какой версии базы он собран.</li></ul></div>
+    </div>
+    <div class="case-result"><h5 class="mono">Результат</h5><p>Ассистент работает 24/7 по актуальной базе: обновлённый прайс или спецификация попадает в выдачу в течение 15 минут.</p></div>
+    <p class="case-shows"><span class="mono">Что это показывает →</span> Production RAG на часто меняющихся данных: инкрементальная индексация, метаданные, защита от галлюцинаций и трассируемость.</p>
+    <p class="stackline mono">Python · embeddings · vector search · Pydantic · FastAPI · PostgreSQL · Redis · Google Drive API · Docker · Prometheus · Grafana</p>
+  </div>
+</article>
+<article class="case" data-tags="" id="case-alp">
+  <div class="case-head">
+    <span class="case-num">04</span>
     <div>
       <p class="case-client mono">ALP GROUP · ML Engineer · 07.2022 — 06.2024</p>
       <h3>Генерация протоколов встреч</h3>
@@ -84,7 +124,7 @@
     <p class="case-shows"><span class="mono">Что это показывает →</span> Бейзлайн перед LLM, работа с длинным контекстом и слой валидации против галлюцинаций.</p>
     <p class="stackline mono">Python · scikit-learn · Sentence Transformers · FAISS · BM25 · cross-encoder · Pydantic · FastAPI · Docker · GitHub Actions · AWS</p>
   </div>
-</article><p class="note mono">Метрики — относительно бейзлайна на фиксированных eval-наборах.</p><h3 class="h3">LLM-системы в 1-lab</h3><div class="grid2"><article class="card" id="case-seller" data-tags=""><h4>RAG по каталогу B2B-оборудования</h4><p>Сотни SKU из Google Drive: инкрементальная индексация по хешу, версия документа в индексе, фильтры по SKU, structured output и fallback на человека. Оценка — golden set с размеченными источниками, онлайн — handoff rate и доля лидов, дошедших до CRM.</p><p class="stackline mono">RAG · embeddings · metadata filters · Pydantic · FastAPI · PostgreSQL</p></article><article class="card" id="case-callqc" data-tags=""><h4>LLM-оценка звонков по чек-листу</h4><p>Классификатор и скорер разделены: разные задачи и разная строгость. Модель отвечает на бинарные вопросы, балл считает код, эталонные транскрипты прогоняются при каждом изменении критериев.</p><p class="stackline mono">AssemblyAI · LLM API · post-validation · PostgreSQL</p></article><article class="card" id="case-editorial" data-tags=""><h4>Мультиагентный конвейер с quality gate</h4><p>Четыре роли с JSON-контрактом, порог качества и до 3 итераций, разные модели и температуры по ролям, human-in-the-loop перед публикацией.</p><p class="stackline mono">LLM API · agent orchestration · Telethon · PostgreSQL</p></article></div></section><section class="wrap block" id="stack"><h2 class="h2">Стек</h2><dl class="skills"><div class="sk"><dt class="mono">Backend</dt><dd><ul class="tags"><li>Python</li><li>FastAPI</li><li>Pydantic</li><li>PostgreSQL</li><li>Redis</li></ul></dd></div><div class="sk"><dt class="mono">LLM и модели</dt><dd><ul class="tags"><li>LLM API</li><li>open-source LLM</li><li>Hugging Face Transformers</li><li>Sentence Transformers</li><li>PEFT / LoRA</li></ul></dd></div><div class="sk"><dt class="mono">RAG и поиск</dt><dd><ul class="tags"><li>embeddings</li><li>FAISS</li><li>BM25</li><li>hybrid retrieval</li><li>RRF</li><li>cross-encoder reranking</li><li>metadata filtering</li></ul></dd></div><div class="sk"><dt class="mono">Оценка</dt><dd><ul class="tags"><li>golden sets</li><li>Recall@K</li><li>NDCG</li><li>MRR</li><li>groundedness</li><li>unsupported claim rate</li><li>regression suites</li><li>P50 / P95 latency</li><li>cache hit rate</li></ul></dd></div><div class="sk"><dt class="mono">MLOps</dt><dd><ul class="tags"><li>Docker</li><li>GitHub Actions</li><li>AWS</li><li>Prometheus</li><li>Grafana</li><li>ClearML (трекинг экспериментов)</li></ul></dd></div><div class="sk"><dt class="mono">Интеграции</dt><dd><ul class="tags"><li>n8n</li><li>CRM API</li><li>Google Drive API</li><li>Telegram API</li></ul></dd></div></dl></section><section class="wrap block" id="experience"><h2 class="h2">Опыт</h2><ol class="timeline"><li><span class="period mono">12.2025 — н.в.</span><div><h4>1-lab <span class="role">· LLM Engineer</span></h4><p>LLM-сервисы в продакшене: RAG по каталогу с инкрементальной индексацией, LLM-оценка звонков с детерминированным скорингом, мультиагентный конвейер с quality gate.</p></div></li><li><span class="period mono">08.2024 — 11.2025</span><div><h4>YADRO <span class="role">· ML Engineer</span></h4><p>Production RAG по технической документации: гибридный поиск, reranking, LoRA/PEFT, claim-level оценка, latency.</p></div></li><li><span class="period mono">07.2022 — 06.2024</span><div><h4>ALP GROUP <span class="role">· ML Engineer</span></h4><p>NLP и LLM для протоколов встреч: классический бейзлайн, гибридный RAG, иерархическая суммаризация, валидация.</p></div></li></ol></section>
+</article><p class="note mono">Метрики — относительно бейзлайна на фиксированных eval-наборах.</p><h3 class="h3">Ещё в 1-lab</h3><div class="grid2"><article class="card" id="case-editorial" data-tags=""><h4>Мультиагентный конвейер с quality gate</h4><p>Четыре роли с JSON-контрактом, порог качества и до 3 итераций, разные модели и температуры по ролям, human-in-the-loop перед публикацией.</p><p class="stackline mono">LLM API · agent orchestration · Telethon · PostgreSQL</p></article></div></section><section class="wrap block" id="stack"><h2 class="h2">Стек</h2><dl class="skills"><div class="sk"><dt class="mono">Backend</dt><dd><ul class="tags"><li>Python</li><li>FastAPI</li><li>Pydantic</li><li>PostgreSQL</li><li>Redis</li></ul></dd></div><div class="sk"><dt class="mono">LLM и модели</dt><dd><ul class="tags"><li>LLM API</li><li>open-source LLM</li><li>Hugging Face Transformers</li><li>Sentence Transformers</li><li>PEFT / LoRA</li></ul></dd></div><div class="sk"><dt class="mono">RAG и поиск</dt><dd><ul class="tags"><li>embeddings</li><li>FAISS</li><li>BM25</li><li>hybrid retrieval</li><li>RRF</li><li>cross-encoder reranking</li><li>metadata filtering</li></ul></dd></div><div class="sk"><dt class="mono">Оценка</dt><dd><ul class="tags"><li>golden sets</li><li>Recall@K</li><li>NDCG</li><li>MRR</li><li>groundedness</li><li>unsupported claim rate</li><li>regression suites</li><li>P50 / P95 latency</li><li>cache hit rate</li></ul></dd></div><div class="sk"><dt class="mono">MLOps</dt><dd><ul class="tags"><li>Docker</li><li>GitHub Actions</li><li>AWS</li><li>Prometheus</li><li>Grafana</li><li>ClearML (трекинг экспериментов)</li></ul></dd></div><div class="sk"><dt class="mono">Интеграции</dt><dd><ul class="tags"><li>n8n</li><li>CRM API</li><li>Google Drive API</li><li>Telegram API</li></ul></dd></div></dl></section><section class="wrap block" id="experience"><h2 class="h2">Опыт</h2><ol class="timeline"><li><span class="period mono">12.2025 — н.в.</span><div><h4>1-lab <span class="role">· LLM Engineer</span></h4><p>LLM-сервисы в продакшене: RAG по каталогу с инкрементальной индексацией, LLM-оценка звонков с детерминированным скорингом, мультиагентный конвейер с quality gate.</p></div></li><li><span class="period mono">08.2024 — 11.2025</span><div><h4>YADRO <span class="role">· ML Engineer</span></h4><p>Production RAG по технической документации: гибридный поиск, reranking, LoRA/PEFT, claim-level оценка, latency.</p></div></li><li><span class="period mono">07.2022 — 06.2024</span><div><h4>ALP GROUP <span class="role">· ML Engineer</span></h4><p>NLP и LLM для протоколов встреч: классический бейзлайн, гибридный RAG, иерархическая суммаризация, валидация.</p></div></li></ol></section>
 
 <section class="wrap contact" id="contact">
   <h2>Давайте поговорим</h2>

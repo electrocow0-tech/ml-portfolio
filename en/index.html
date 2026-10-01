@@ -65,9 +65,49 @@
     <p class="stackline mono">Python · Transformers · Sentence Transformers · PEFT/LoRA · BM25 · cross-encoder · FastAPI · ClearML · Docker · Prometheus · Grafana</p>
   </div>
 </article>
-<article class="case" data-tags="" id="case-alp">
+<article class="case" data-tags="" id="case-ml-callqc">
   <div class="case-head">
     <span class="case-num">02</span>
+    <div>
+      <p class="case-client mono">1-lab · LLM Engineer · car dealership, production</p>
+      <h3>LLM call scoring with measurable reliability</h3>
+    </div>
+  </div>
+  <div class="case-body">
+    <div class="case-problem"><h5 class="mono">Problem</h5><p>Every sales call has to be scored against a 15-criterion weighted checklist — without a human, and in a way the score can be trusted. Manually, only 20–30% of calls were reviewed.</p></div>
+    
+    <div class="case-cols">
+      <div><h5 class="mono">What I built</h5><ul><li>Transcription with speaker diarization, utterances split into manager / customer with timestamps.</li><li>First LLM step — a call-type classifier based on content, not duration: technical, failed, customer coming anyway, full sales conversation.</li><li>Second step — a scorer: binary answers per criterion plus the objection text, refusal reason and a short summary.</li><li>Post-validation in code: JSON extraction, snapping to a “0 or criterion weight” grid, field truncation, deterministic final score.</li></ul></div>
+      <div><h5 class="mono">Engineering decisions</h5><ul><li>Two calls instead of one: different tasks and strictness — fewer false zeros on short but substantive calls, and the checklist changes without touching filtering.</li><li>A set of reference transcripts with expected scores runs on every criteria change; a sample is regularly checked against manual scores, and discrepancies feed back into prompt rules.</li><li>The classifier is tuned conservatively: better to score an extra call than miss a substantive one.</li></ul></div>
+    </div>
+    <div class="case-result"><h5 class="mono">Result</h5><p>25,950+ calls scored, 100% coverage instead of 20–30%, scores arrive 1–2 minutes after the deal.</p></div>
+    <p class="case-shows"><span class="mono">What it shows →</span> The LLM as a reliable component: task decomposition, constrained output, deterministic scoring and regression evaluation.</p>
+    <p class="stackline mono">Python · AssemblyAI · LLM API · Pydantic · PostgreSQL · S3 · Docker · Grafana</p>
+  </div>
+</article>
+<article class="case" data-tags="" id="case-ml-rag">
+  <div class="case-head">
+    <span class="case-num">03</span>
+    <div>
+      <p class="case-client mono">1-lab · LLM Engineer · industrial manufacturer, production</p>
+      <h3>RAG over a B2B equipment catalog</h3>
+    </div>
+  </div>
+  <div class="case-body">
+    <div class="case-problem"><h5 class="mono">Problem</h5><p>Hundreds of SKUs; specs and price lists change regularly. The assistant must not invent specs or prices or confuse similar models.</p></div>
+    
+    <div class="case-cols">
+      <div><h5 class="mono">What I built</h5><ul><li>Ingestion from Google Drive: change detection by hash, incremental re-indexing every 15 minutes, extraction of text and technical tables.</li><li>Semantic chunking by sections, models and specs rather than character count; metadata: SKU, category, source, date, version.</li><li>Retrieval with metadata filters and a relevance threshold; grounded generation with structured output (reply, fields, confidence, escalation flag).</li><li>Evaluation: a golden set of real questions with labelled sources (Recall@K, NDCG@K), groundedness and the share of unsupported answers; online — handoff rate and latency.</li></ul></div>
+      <div><h5 class="mono">Engineering decisions</h5><ul><li>RAG rather than fine-tuning: the catalog and prices change, and the index updates without retraining.</li><li>An SKU filter keeps search from drifting to a similar but different model; no evidence in context means no number in the answer — the question goes to a human.</li><li>Document version and indexing time are stored in the index — for any answer you can see which knowledge base version it came from.</li></ul></div>
+    </div>
+    <div class="case-result"><h5 class="mono">Result</h5><p>The assistant runs 24/7 on an up-to-date base: an updated price list or spec reaches retrieval within 15 minutes.</p></div>
+    <p class="case-shows"><span class="mono">What it shows →</span> Production RAG on frequently changing data: incremental indexing, metadata, hallucination guards and traceability.</p>
+    <p class="stackline mono">Python · embeddings · vector search · Pydantic · FastAPI · PostgreSQL · Redis · Google Drive API · Docker · Prometheus · Grafana</p>
+  </div>
+</article>
+<article class="case" data-tags="" id="case-alp">
+  <div class="case-head">
+    <span class="case-num">04</span>
     <div>
       <p class="case-client mono">ALP GROUP · ML Engineer · Jul 2022 — Jun 2024</p>
       <h3>Meeting minutes generation</h3>
@@ -84,7 +124,7 @@
     <p class="case-shows"><span class="mono">What it shows →</span> A baseline before the LLM, long-context handling and a validation layer against hallucinations.</p>
     <p class="stackline mono">Python · scikit-learn · Sentence Transformers · FAISS · BM25 · cross-encoder · Pydantic · FastAPI · Docker · GitHub Actions · AWS</p>
   </div>
-</article><p class="note mono">Metrics are relative to the baseline on fixed evaluation sets.</p><h3 class="h3">LLM systems at 1-lab</h3><div class="grid2"><article class="card" id="case-seller" data-tags=""><h4>RAG over a B2B equipment catalog</h4><p>Hundreds of SKUs from Google Drive: incremental indexing by hash, document version in the index, SKU filters, structured output and human fallback. Evaluated on a golden set with labelled sources, online via handoff rate and share of leads reaching the CRM.</p><p class="stackline mono">RAG · embeddings · metadata filters · Pydantic · FastAPI · PostgreSQL</p></article><article class="card" id="case-callqc" data-tags=""><h4>LLM call scoring against a checklist</h4><p>Classifier and scorer are separate: different tasks, different strictness. The model answers binary questions, the code computes the score, and reference transcripts re-run on every criteria change.</p><p class="stackline mono">AssemblyAI · LLM API · post-validation · PostgreSQL</p></article><article class="card" id="case-editorial" data-tags=""><h4>Multi-agent pipeline with a quality gate</h4><p>Four roles with a JSON contract, a quality threshold and up to 3 iterations, different models and temperatures per role, human-in-the-loop before publishing.</p><p class="stackline mono">LLM API · agent orchestration · Telethon · PostgreSQL</p></article></div></section><section class="wrap block" id="stack"><h2 class="h2">Stack</h2><dl class="skills"><div class="sk"><dt class="mono">Backend</dt><dd><ul class="tags"><li>Python</li><li>FastAPI</li><li>Pydantic</li><li>PostgreSQL</li><li>Redis</li></ul></dd></div><div class="sk"><dt class="mono">LLM &amp; models</dt><dd><ul class="tags"><li>LLM API</li><li>open-source LLM</li><li>Hugging Face Transformers</li><li>Sentence Transformers</li><li>PEFT / LoRA</li></ul></dd></div><div class="sk"><dt class="mono">RAG &amp; retrieval</dt><dd><ul class="tags"><li>embeddings</li><li>FAISS</li><li>BM25</li><li>hybrid retrieval</li><li>RRF</li><li>cross-encoder reranking</li><li>metadata filtering</li></ul></dd></div><div class="sk"><dt class="mono">Evaluation</dt><dd><ul class="tags"><li>golden sets</li><li>Recall@K</li><li>NDCG</li><li>MRR</li><li>groundedness</li><li>unsupported claim rate</li><li>regression suites</li><li>P50 / P95 latency</li><li>cache hit rate</li></ul></dd></div><div class="sk"><dt class="mono">MLOps</dt><dd><ul class="tags"><li>Docker</li><li>GitHub Actions</li><li>AWS</li><li>Prometheus</li><li>Grafana</li><li>ClearML (трекинг экспериментов)</li></ul></dd></div><div class="sk"><dt class="mono">Integrations</dt><dd><ul class="tags"><li>n8n</li><li>CRM API</li><li>Google Drive API</li><li>Telegram API</li></ul></dd></div></dl></section><section class="wrap block" id="experience"><h2 class="h2">Experience</h2><ol class="timeline"><li><span class="period mono">Dec 2025 — present</span><div><h4>1-lab <span class="role">· LLM Engineer</span></h4><p>Production LLM services: catalog RAG with incremental indexing, LLM call scoring with deterministic scoring, a multi-agent pipeline with a quality gate.</p></div></li><li><span class="period mono">Aug 2024 — Nov 2025</span><div><h4>YADRO <span class="role">· ML Engineer</span></h4><p>Production RAG over technical documentation: hybrid retrieval, reranking, LoRA/PEFT, claim-level evaluation, latency.</p></div></li><li><span class="period mono">Jul 2022 — Jun 2024</span><div><h4>ALP GROUP <span class="role">· ML Engineer</span></h4><p>NLP and LLMs for meeting minutes: classical baseline, hybrid RAG, hierarchical summarisation, validation.</p></div></li></ol></section>
+</article><p class="note mono">Metrics are relative to the baseline on fixed evaluation sets.</p><h3 class="h3">Also at 1-lab</h3><div class="grid2"><article class="card" id="case-editorial" data-tags=""><h4>Multi-agent pipeline with a quality gate</h4><p>Four roles with a JSON contract, a quality threshold and up to 3 iterations, different models and temperatures per role, human-in-the-loop before publishing.</p><p class="stackline mono">LLM API · agent orchestration · Telethon · PostgreSQL</p></article></div></section><section class="wrap block" id="stack"><h2 class="h2">Stack</h2><dl class="skills"><div class="sk"><dt class="mono">Backend</dt><dd><ul class="tags"><li>Python</li><li>FastAPI</li><li>Pydantic</li><li>PostgreSQL</li><li>Redis</li></ul></dd></div><div class="sk"><dt class="mono">LLM &amp; models</dt><dd><ul class="tags"><li>LLM API</li><li>open-source LLM</li><li>Hugging Face Transformers</li><li>Sentence Transformers</li><li>PEFT / LoRA</li></ul></dd></div><div class="sk"><dt class="mono">RAG &amp; retrieval</dt><dd><ul class="tags"><li>embeddings</li><li>FAISS</li><li>BM25</li><li>hybrid retrieval</li><li>RRF</li><li>cross-encoder reranking</li><li>metadata filtering</li></ul></dd></div><div class="sk"><dt class="mono">Evaluation</dt><dd><ul class="tags"><li>golden sets</li><li>Recall@K</li><li>NDCG</li><li>MRR</li><li>groundedness</li><li>unsupported claim rate</li><li>regression suites</li><li>P50 / P95 latency</li><li>cache hit rate</li></ul></dd></div><div class="sk"><dt class="mono">MLOps</dt><dd><ul class="tags"><li>Docker</li><li>GitHub Actions</li><li>AWS</li><li>Prometheus</li><li>Grafana</li><li>ClearML (трекинг экспериментов)</li></ul></dd></div><div class="sk"><dt class="mono">Integrations</dt><dd><ul class="tags"><li>n8n</li><li>CRM API</li><li>Google Drive API</li><li>Telegram API</li></ul></dd></div></dl></section><section class="wrap block" id="experience"><h2 class="h2">Experience</h2><ol class="timeline"><li><span class="period mono">Dec 2025 — present</span><div><h4>1-lab <span class="role">· LLM Engineer</span></h4><p>Production LLM services: catalog RAG with incremental indexing, LLM call scoring with deterministic scoring, a multi-agent pipeline with a quality gate.</p></div></li><li><span class="period mono">Aug 2024 — Nov 2025</span><div><h4>YADRO <span class="role">· ML Engineer</span></h4><p>Production RAG over technical documentation: hybrid retrieval, reranking, LoRA/PEFT, claim-level evaluation, latency.</p></div></li><li><span class="period mono">Jul 2022 — Jun 2024</span><div><h4>ALP GROUP <span class="role">· ML Engineer</span></h4><p>NLP and LLMs for meeting minutes: classical baseline, hybrid RAG, hierarchical summarisation, validation.</p></div></li></ol></section>
 
 <section class="wrap contact" id="contact">
   <h2>Let&#x27;s talk</h2>
